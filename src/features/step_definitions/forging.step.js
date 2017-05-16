@@ -1,13 +1,10 @@
 var {defineSupportCode} = require('cucumber');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
+var { waitForElemAndCheckItsText } = require('../support/util.js');
 
 chai.use(chaiAsPromised);
 var expect = chai.expect;
-
-const EC = protractor.ExpectedConditions;
-const waitTime = 5000;
-
 
 defineSupportCode(({Given, When, Then}) => {
   Then('I should see forging center', function (callback) {
@@ -20,11 +17,3 @@ defineSupportCode(({Given, When, Then}) => {
     callback();
   });
 });
-
-function waitForElemAndCheckItsText(selector, text, callback) {
-  const elem = element.all(by.css(selector)).get(0);
-  browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
-  expect(elem.getText()).to.eventually.equal(text, `inside element "${selector}"`)
-    .and.notify(callback);
-}
-

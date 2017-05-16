@@ -1,12 +1,10 @@
 var {defineSupportCode} = require('cucumber');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
+var {waitForElemAndClickIt} = require('../support/util.js');
 
 chai.use(chaiAsPromised);
 var expect = chai.expect;
-
-const EC = protractor.ExpectedConditions;
-const waitTime = 5000;
 
 defineSupportCode(({Given, When, Then}) => {
   When('I click checkbox on table row no. {index}', function (index, callback) {
@@ -26,10 +24,3 @@ defineSupportCode(({Given, When, Then}) => {
       .and.notify(callback);
   });
 });
-
-function waitForElemAndClickIt(selector, callback) {
-  const elem = element.all(by.css(selector)).get(0);
-  browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
-  elem.click();
-  if (callback) callback();
-}

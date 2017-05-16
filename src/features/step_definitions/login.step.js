@@ -1,6 +1,7 @@
 var {defineSupportCode} = require('cucumber');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
+var {waitForElemAndCheckItsText} = require('../support/util.js');
 
 chai.use(chaiAsPromised);
 var expect = chai.expect;
@@ -12,8 +13,7 @@ defineSupportCode(({Given, When, Then}) => {
   Given('I\'m on login page', (callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
-    browser.get('about:blank');
-    browser.refresh();
+    browser.driver.get("about:blank");
     browser.get('http://localhost:8080/#/?peerStack=localhost').then(callback);
   });
 
@@ -22,9 +22,3 @@ defineSupportCode(({Given, When, Then}) => {
   });
 });
 
-function waitForElemAndCheckItsText(selector, text, callback) {
-  const elem = element.all(by.css(selector)).get(0);
-  browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
-  expect(elem.getText()).to.eventually.equal(text, `inside element "${selector}"`)
-    .and.notify(callback);
-}

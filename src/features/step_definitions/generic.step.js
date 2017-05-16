@@ -1,6 +1,12 @@
 var {defineSupportCode} = require('cucumber');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
+var {
+  waitForElemAndCheckItsText,
+  waitForElemAndClickIt,
+  waitForElemAndSendKeys,
+  checkAlertDialog,
+} = require('../support/util.js');
 
 chai.use(chaiAsPromised);
 var expect = chai.expect;
@@ -30,9 +36,6 @@ const accounts = {
   },
 };
 accounts['any account'] = accounts.genesis;
-
-const EC = protractor.ExpectedConditions;
-const waitTime = 10000;
 
 defineSupportCode(({Given, When, Then, setDefaultTimeout}) => {
   setDefaultTimeout(20 * 1000);
@@ -94,8 +97,8 @@ defineSupportCode(({Given, When, Then, setDefaultTimeout}) => {
   Given('I\'m logged in as "{accountName}"', function (accountName, callback) {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
-    browser.get('about:blank');
-    browser.get('http://localhost:8080#/?peerStack=localhost');
+    browser.driver.get("about:blank");
+    browser.get('http://localhost:8080/#/?peerStack=localhost').then(callback);
     waitForElemAndSendKeys('input[type="password"]', accounts[accountName].passphrase);
     waitForElemAndClickIt('.md-button.md-primary.md-raised', callback);
   });
@@ -136,34 +139,3 @@ defineSupportCode(({Given, When, Then, setDefaultTimeout}) => {
   });
 });
 
-function waitForElemAndCheckItsText(selector, text, callback) {
-  const elem = element.all(by.css(selector)).get(0);
-  browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
-  const exp = expect(elem.getText()).to.eventually.equal(text, `inside element "${selector}"`);
-  if (callback) {
-    exp.and.notify(callback);
-  }
-}
-
-function waitForElemAndClickIt(selector, callback) {
-  const elem = element.all(by.css(selector)).get(0);
-  browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
-  elem.click();
-  if (callback) callback();
-}
-
-function waitForElemAndSendKeys(selector, keys, callback) {
-  const elem = element.all(by.css(selector)).get(0);
-  browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
-  elem.sendKeys(keys);
-  if (callback) callback();
-}
-
-function checkAlertDialog(title, text, callback) {
-  waitForElemAndCheckItsText('md-dialog h2', title);
-  waitForElemAndCheckItsText('md-dialog .md-dialog-content-body', text);
-  const okButton = element(by.css('md-dialog .md-button.md-ink-ripple'));
-  okButton.click();
-  browser.sleep(500);
-  if (callback) callback();
-}
