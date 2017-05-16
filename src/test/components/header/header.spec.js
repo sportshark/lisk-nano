@@ -34,7 +34,7 @@ describe('Header component', () => {
 
   const LOGOUT_BUTTON_TEXT = 'Logout';
   it(`should contain "${LOGOUT_BUTTON_TEXT}" button if $root.logged`, () => {
-    expect(element.find('button.logout').text()).to.equal(LOGOUT_BUTTON_TEXT);
+    expect(element.find('.logout-button').text()).to.equal(LOGOUT_BUTTON_TEXT);
   });
 });
 
