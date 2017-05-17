@@ -1,3 +1,8 @@
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+
+chai.use(chaiAsPromised);
+const expect = chai.expect;
 const EC = protractor.ExpectedConditions;
 const waitTime = 4000;
 
