@@ -99,7 +99,7 @@ defineSupportCode(({Given, When, Then, setDefaultTimeout}) => {
     browser.driver.manage().window().setSize(1000, 1000);
     browser.driver.get("about:blank");
     browser.get('http://localhost:8080/#/?peerStack=localhost').then(callback);
-    waitForElemAndSendKeys('input[type="password"]', accounts[accountName].passphrase);
+    waitForElemAndSendKeys('.passphrase', accounts[accountName].passphrase);
     waitForElemAndClickIt('.md-button.md-primary.md-raised', callback);
   });
 

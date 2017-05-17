@@ -2,21 +2,21 @@ const EC = protractor.ExpectedConditions;
 const waitTime = 4000;
 
 function waitForElemAndCheckItsText(selector, text, callback) {
-  const elem = element.all(by.css(selector)).get(0);
+  const elem = element(by.css(selector));
   browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
   expect(elem.getText()).to.eventually.equal(text, `inside element "${selector}"`)
     .and.notify(callback);
 }
 
 function waitForElemAndClickIt(selector, callback) {
-  const elem = element.all(by.css(selector)).get(0);
+  const elem = element(by.css(selector));
   browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
   elem.click();
   if (callback) callback();
 }
 
 function waitForElemAndSendKeys(selector, keys, callback) {
-  const elem = element.all(by.css(selector)).get(0);
+  const elem = element(by.css(selector));
   browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
   elem.sendKeys(keys);
   if (callback) callback();
