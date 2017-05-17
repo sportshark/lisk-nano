@@ -22,8 +22,8 @@ app.component('timestamp', {
    * @constructor
    */
   controller: class timestamp {
-    constructor($scope, $timeout) {
-      this.$timeout = $timeout;
+    constructor($scope, $interval) {
+      this.$interval = $interval;
 
       /**
        * @todo If we change this component to a directive, we won't need this watcher
@@ -32,7 +32,7 @@ app.component('timestamp', {
     }
 
     $onDestroy() {
-      this.$timeout.cancel(this.timeout);
+      this.$interval.cancel(this.interval);
     }
 
     /**
@@ -41,13 +41,14 @@ app.component('timestamp', {
      * @todo Either remove this interval and use moment directly, or use Sync service instead.
      */
     update() {
-      this.$timeout.cancel(this.timeout);
+      this.$interval.cancel(this.interval);
+      this.interval = this.$interval(this._update.bind(this), UPDATE_INTERVAL_UPDATE);
+    }
 
+    _update() {
       const obj = moment(timestamp.fix(this.data));
       this.full = obj.format('LL LTS');
       this.time_ago = obj.fromNow(true);
-
-      this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL_UPDATE);
     }
 
     static fix(value) {
