@@ -24,6 +24,7 @@
     "babel-polyfill": "=6.9.1",
     "bignumber.js": "=4.0.0",
     "bitcore-mnemonic": "=1.1.1",
+    "cucumber": "=2.1.0",
     "debug": "=2.2.0",
     "jquery": "=2.2.4",
     "lisk-js": "=0.4.1",
