@@ -22,13 +22,13 @@ Feature: Top right menu
     And  I fill in "079331d868678fd5f272f09d6dc8792fb21335aec42af7f11caadbfbc17d4707e7d7f343854b0c619b647b81ba3f29b23edb4eaf382a47c534746bad4529560b48656c6c6f20776f726c64" to "signature" field
     Then I should see "Hello world" in "result" field
 
-  Scenario: should allow to set 2nd passphrase
-    Given I'm logged in as "second passphrase candidate"
-    When I click "register second passphrase" in main menu
-    And I 250 times move mouse randomly
-    And I remember passphrase, click "yes its save button", fill in missing word
-    And I click "ok button"
-    Then I should see alert dialog with title "Success" and text "Your second passphrase was successfully registered."
+  # Scenario: should allow to set 2nd passphrase
+    # Given I'm logged in as "second passphrase candidate"
+    # When I click "register second passphrase" in main menu
+    # And I 250 times move mouse randomly
+    # And I remember passphrase, click "yes its save button", fill in missing word
+    # And I click "ok button"
+    # Then I should see alert dialog with title "Success" and text "Your second passphrase was successfully registered."
 
   Scenario: should allow to register a delegate
     Given I'm logged in as "delegate candidate"
