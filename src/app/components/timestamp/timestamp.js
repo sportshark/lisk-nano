@@ -42,6 +42,7 @@ app.component('timestamp', {
      */
     update() {
       this.$interval.cancel(this.interval);
+      this._update();
       this.interval = this.$interval(this._update.bind(this), UPDATE_INTERVAL_UPDATE);
     }
 
