@@ -12,11 +12,11 @@ Feature: Transfer dialog
     When I click "transfer button"
     And I fill in "1" to "amount" field
     And I fill in "537318935439898807L" to "recipient" field
-    Then I should see "Not enough funds" error message
+    Then I should see "Insufficient funds" error message
 
   Scenario: should not allow to do a transfer when invalid address
     Given I'm logged in as "any account"
     When I click "transfer button"
-    And I fill in "1" to "amount" field
     And I fill in "1243409812409" to "recipient" field
+    And I fill in "1" to "amount" field
     Then I should see "Invalid" error message

@@ -32,7 +32,7 @@ Feature: Top right menu
 
   Scenario: should allow to register a delegate
     Given I'm logged in as "delegate candidate"
-    When I click "register delegate" in main menu
+    When I click "register as delegate" in main menu
     And I fill in "test" to "username" field
     And I click "register button"
     Then I should see alert dialog with title "Success" and text "Account was successfully registered as delegate."
