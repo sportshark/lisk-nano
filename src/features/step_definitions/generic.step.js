@@ -41,7 +41,8 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   setDefaultTimeout(20 * 1000);
 
   When('I fill in "{value}" to "{fieldName}" field', (value, fieldName, callback) => {
-    waitForElemAndSendKeys(`.${fieldName.replace(/ /g, '-')}`, value, callback);
+    const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
+    waitForElemAndSendKeys('input' + selectorClass + ', textarea' + selectorClass, value, callback);
   });
 
   Then('I should see "{value}" in "{fieldName}" field', (value, fieldName, callback) => {
@@ -63,8 +64,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndClickIt(`md-select.${selectName}`);
     const optionElem = element.all(by.css('md-select-menu md-option')).get(index - 1);
     browser.wait(EC.presenceOf(optionElem), waitTime);
-    optionElem.click();
-    callback();
+    optionElem.click().then(callback);
   });
 
   Then('the option "{optionText}" is selected in "{selectName}" select', (optionText, selectName, callback) => {
@@ -98,7 +98,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
     browser.driver.get('about:blank');
-    browser.get('http://localhost:8080/#/?peerStack=localhost').then(callback);
+    browser.get('http://localhost:8080/#/?peerStack=localhost');
     waitForElemAndSendKeys('.passphrase', accounts[accountName].passphrase);
     waitForElemAndClickIt('.md-button.md-primary.md-raised', callback);
   });
@@ -132,9 +132,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
         const missingWordIndex = firstPartOfPassphrase.length ?
           firstPartOfPassphrase.split(' ').length :
           0;
-        element(by.css('.dialog-save input')).sendKeys(passphraseWords[missingWordIndex]);
-
-        callback();
+        element(by.css('.dialog-save input')).sendKeys(passphraseWords[missingWordIndex]).then(callback);
       });
     });
   });

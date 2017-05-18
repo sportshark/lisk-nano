@@ -13,9 +13,9 @@ defineSupportCode(({Given, When, Then}) => {
 
   When('Search twice for "{searchTerm}" in vote dialog', function (searchTerm, callback) {
     element.all(by.css('md-autocomplete-wrap input')).get(0).sendKeys(searchTerm);
-    waitForElemAndClickIt('md-autocomplete-parent-scope');
+    waitForElemAndClickIt('ul.md-autocomplete-suggestions li:nth-child(1) md-autocomplete-parent-scope');
     element.all(by.css('md-autocomplete-wrap input')).get(0).sendKeys(searchTerm);
-    waitForElemAndClickIt('md-autocomplete-parent-scope', callback);
+    waitForElemAndClickIt('ul.md-autocomplete-suggestions li:nth-child(1) md-autocomplete-parent-scope', callback);
   });
 
   Then('I should see delegates list with {count} lines', function (count, callback) {
