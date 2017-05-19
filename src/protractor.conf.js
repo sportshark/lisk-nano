@@ -21,4 +21,8 @@ exports.config = {
     profile: false,
     'no-source': true,
   },
+
+  params: {
+    screenshotFolder: 'e2e-test-screenshots',
+  },
 };
