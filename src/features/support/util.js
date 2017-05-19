@@ -31,10 +31,7 @@ function waitForElemAndSendKeys(selector, keys, callback) {
 
 function checkAlertDialog(title, text, callback) {
   waitForElemAndCheckItsText('md-dialog h2', title);
-  waitForElemAndCheckItsText('md-dialog .md-dialog-content-body', text);
-  const okButton = element(by.css('md-dialog .md-button.md-ink-ripple'));
-  okButton.click().then(() => {
-    browser.sleep(500);
+  waitForElemAndCheckItsText('md-dialog .md-dialog-content-body', text, () => {
     if (callback) callback();
   });
 }
@@ -44,4 +41,5 @@ module.exports = {
   waitForElemAndClickIt,
   waitForElemAndSendKeys,
   checkAlertDialog,
+  waitTime,
 };
